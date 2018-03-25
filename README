@@ -1,0 +1,75 @@
+INSTALLATION
+----------------------------------------------------------------------
+If you are reading this, you have probably already downloaded some
+version of this software.  If not then visit:
+http://nutridb.org/download.php
+
+1) Move the directory that this READFILE is in to your webroot
+
+2) Unzip the database file that came with this sofware
+   (nutridb-database.sql.gz). And install the database, most likely
+   like:
+
+   $ mysql -u root -p < nutridb-database.sql
+
+3) Copy config.php-dist to config.php
+
+4) Edit config.php changing variables as is suitable to your system.
+   Minimally you will need to edit $config->_rootDir, $config->_rootUri
+   and the DB constants.
+
+5) This software relies on the mod_rewrite Apache module to remove
+   .php extensions from URLs.  There is an .htaccess file included
+   which accomplishes this, but you will at the very least need to
+   have an "AllowOverride FileInfo" in your host's Apache config for
+   this to work.
+
+That should be about it.
+
+INSTALLING A NEW VERSION OF THE SR DATABASE
+----------------------------------------------------------------------
+As the data comes from the USDA NAL not every food will have common
+weights associated with it in the weights table.  In such cases it is
+assumed that the nutrient data is for 100g.  However, as of SR19 the
+vast majority of foods have common weights and measures - out of 7,293
+foods only 532 don't have weights.  We want to keep the database
+as close to the original as possible so that future upgrades to new
+releases of the data are as easy as possible.  However, rather than
+having to add a lot of extra code to work around these special cases
+that have no common weights and measures, it seems easiest to me to make
+sure that every single food has at least one entry in the weights table.
+This will help to standardize the code and reduce exception handling.
+In order to do this only one simple query needs to be run on the database
+after a new install of fresh data from the USDA NAL:
+
+INSERT INTO weights (ndb_no, seq, amount, msre_desc, gm_wgt, num_data_pts)
+SELECT DISTINCT nutrientData.ndb_no, '1', '1', 'unit', '100', '999'
+FROM nutrientData LEFT JOIN weights
+	ON nutrientData.ndb_no = weights.ndb_no
+WHERE weights.ndb_no IS NULL;
+
+This should effectively add an entry in the weights table for each
+ndb_no in nutrientData that didn't previously have an entry.  The values
+are representative of 100g of that food.  The value of '999' in the
+field num_data_pts is bogus and is only there as a way to easily
+identify these added records later should we wish to delete or alter
+them at once.
+
+----------------------------------------------------------------------
+Also, since we allow users to search other user's saved foods and meals
+then it is expedient to add user saved foods and meals as categories.
+Thus, we need to enter two entries to the food categories table.  I have
+given them low categories numbers, below the current lowest number, so as
+to not conflict with future categories that the USDA may add.
+
+INSERT INTO foodCats(fdgrp_cd, fdgrp_desc) VALUES('0001', 'User saved foods');
+INSERT INTO foodCats(fdgrp_cd, fdgrp_desc) VALUES('0002', 'User saved meals');
+----------------------------------------------------------------------
+
+We also need to add column to foodDescs, userFoods, and userMeals that
+will incremented each time that a user selects a particular item after a
+search.  The higher the number, the higher popularity we attach to it.
+
+ALTER TABLE foodDescs ADD COLUMN popularity INT DEFAULT 0;
+ALTER TABLE userFoods ADD COLUMN popularity INT DEFAULT 0;
+ALTER TABLE userxMeals ADD COLUMN popularity IN DEFAULT 0;

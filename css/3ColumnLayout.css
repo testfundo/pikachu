@@ -1,0 +1,101 @@
+/* http://www.positioniseverything.net/articles/onetruelayout/example/equalheightopera8fix */
+/* 3 COLUMN LIQUID LAYOUT BEGIN */
+
+#middleColumn {
+	float: left;
+	width: 64%;
+	margin-left: 20%;
+	margin-right: 1%;
+}
+
+* html #middleColumn {
+	display: inline;
+}
+
+#leftColumn {
+	float: left;
+	width: 19%;
+	margin-left: -85%;
+	background-color: #009999;
+}
+
+#rightColumn {
+	float: left;
+	width: 15%;
+	background-color: #cccccc;
+}
+
+/* Start Mac IE5 filter */
+#middleColumn, #leftColumn, #rightColumn {
+	padding-bottom: 32767px;
+	margin-bottom: -32767px; 
+}
+
+@media all and (min-width: 0px) {
+	#middleColumn, #leftColumn, #rightColumn {
+		padding-bottom: 0;
+		margin-bottom: 0; 
+	}
+	#middleColumn:before, #leftColumn:before, #rightColumn:before {
+		display: block;
+		background: inherit;
+		padding-top: 32767px;
+		margin-bottom: -32767px;
+		height: 0;
+	}
+}
+/* End Mac IE5 filter */
+
+#columnContainer {
+	/* This hides the excess padding in non-IE browsers */
+	overflow: hidden;
+}
+
+/* we need this for IE 5.01 - otherwise the columnContainer does not expand to the
+necessary height (unless fixed, this problem becomes even more acute 
+weirdness as the method is enhanced */
+#columnContainer {
+	/* Normally a Holly-style hack height: 1% would suffice but that causes 
+	IE 5.01 to completely collapse the columnContainer - instead we float it */
+	float: left;
+	/* NB. possibly only IE 5.01 needs to get this float value - otherwise 5.5 sometimes 
+	(I saw it happen many moons ago) makes the width of columnContainer too small 
+	the float: none with the comment is ignored by 5.01,
+	5.5 and above see it and carry on about their business
+	It's probably fine to just remove it, but it's left here 
+	just in case that many moons ago problem rears its head again */
+	float/**/: none;
+}
+
+/* begin easy clearing */
+#columnContainer:after {
+	display: block; 
+	height: 0; 
+	clear: both; 
+	visibility: hidden;
+}
+
+#columnContainer {
+	display: inline-block;
+}
+
+/*\*/
+#columnContainer {
+	display: block;
+}
+/* end easy clearing */
+
+#footer {
+	clear: both;
+}
+
+/* Safari needs this - otherwise the ghost overflow, though painted 
+correctly obscures links and form elements that by rights should be above it.
+An unintended side-effect is that it cause such elements to vanish in IE 5.01
+and 5.5, hence the child selector hack */
+* > #footer, * > form {
+	position: relative;
+	/* z-index: 1000; */
+}
+
+/* 3 COLUMN LIQUID LAYOUT END */

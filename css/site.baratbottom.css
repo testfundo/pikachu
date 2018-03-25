@@ -1,0 +1,191 @@
+body {
+	margin: 1em;
+	background-color: #ffffff;
+	font-family: Verdana, Arial;
+	font-size: 10pt;
+}
+
+img {
+	border: none;
+}
+
+table, caption {
+	font-size: inherit;
+	font-weight: inherit;
+	font-style: inherit;
+	font-variant: inherit;
+}
+
+a {
+	color: blue;
+	text-decoration: none;
+}
+
+a:visited {
+	color: blue;
+	text-decoration: none;
+}
+
+a:hover {
+	color: blue;
+	text-decoration: underline;
+}
+
+#header {
+	height: 80px;
+	position: relative;
+	width: 100%;
+	background-color: #ccb8a6;
+}
+
+#headerLeft {
+	position: absolute;
+	height: 60px;
+	line-height: 60px;
+	text-align: left;
+	padding-left: .5ex;
+	font-size: 150%;
+	font-weight: bold;
+	top: 0;
+	width: 60%;
+}
+
+#headerMiddle {
+	position: absolute;
+	height: 55px;
+	text-align: right;
+	left: 60.5%;
+	width: 29%;
+	top: 0;
+	padding-top: 5px;
+}
+
+#headerRight {
+	position: absolute;
+	height: 55px;
+	text-align: center;
+	left: 89.5%;
+	width: 10%;
+	top: 0;
+	padding-top: 5px;
+	padding-left: 1ex;
+}
+
+#headerLinkBar {
+	position: absolute;
+	top: 60px;
+	width: 100%;
+	height: 20px;
+	background-color: #000000;
+}
+
+#headerLinks {
+	position: absolute;
+	font-size: 8pt;
+	height: 20px;
+	line-height: 20px;
+	font-family: Arial, Verdana;
+	font-weight: bold;
+	color: #ffffff;
+	padding-left: 2ex;
+	width: 39%;
+	top: 0;
+}
+
+#headerLinks a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+#headerLinks a:visited {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+#headerLinks a:hover {
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+#systemMsgs {
+	position: absolute;
+	width: 59%;
+	margin-left: 40%;
+	top: 0;
+	height: 20px;
+	font-size: 8pt;
+	line-height: 20px;
+	font-family: Arial, Verdana;
+	font-weight: bold;
+	text-align: right;
+	padding-right: 1ex;
+}
+
+#leftData {
+	margin: 1ex;
+}
+
+#middleData {
+	margin: 1ex;
+}
+
+#rightData {
+	margin: 1ex;
+}
+
+#footerLinks {
+	text-align: center;
+	background-color: #000000;
+	height: 20px;
+	line-height: 20px;
+	color: white;
+	font-size: 7pt;
+}
+
+#footerLinks a:visited {
+	color: blue;
+}
+
+
+.msgError {
+	color: red;
+}
+
+.msgOkay {
+	color: green;
+}
+
+.pageNav {
+	margin-top: 2ex;
+	margin-bottom: 2ex;
+	text-align: center;
+}
+
+table.standardTable {
+	width: 100%;
+	border: 1px solid grey;
+}
+
+tr.bgDark {
+	background: #e0e0e0;
+}
+
+tr.bgLight {
+	background: #ffffff;
+}
+
+.standardTable td {
+	border: 1px solid #e0e0e0;
+	padding-left: .5em;
+	text-align: left; 
+	border: 1px solid #e0e0e0;
+}
+
+.tableTitleRow {
+	font-weight: bold;
+	text-align: center;
+	background-color: #000000;
+	color: #ffffff;
+}
+
+
